@@ -2,8 +2,8 @@ Package: knapsackProblems
 Type: Package
 Title: Provide three different approaches to solve knapsack proble
 Version: 0.1.0
-Author: Muhammad Faizan Khalid
-Maintainer: Asad Enver, Fahed Maqbool
+Author: Muhammad Faizan Khalid, Asad Enver, Fahed Maqbool
+Maintainer: Muhammad Faizan Khalid <Faizan_khalid15@yahoo.com>
 Description: this package provides three approaches to solve the knapsack problem which includes brute force algorithm,
       Greedy Heuristic approach and dynamic programming. On large datasets these aproaches slow down to increase the
       performance we also implemented parallelism in brute force approach which uses all cores of the system to maxmize

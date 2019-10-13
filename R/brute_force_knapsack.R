@@ -10,15 +10,16 @@
 #'@import parallel
 #'@import combinat
 #'@import microbenchmark
+#'
 #'@export
 brute_force_knapsack <- function(x , w, parallel = FALSE) {
   if (class(x) != "data.frame") {
     stop("x is not data frame")
   }
-  else if (!(is.numeric(x$w) && is.numeric(x$v) && is.numeric(w))) {
-    stopifnot(x$w < 0 && x$v < 0 && w < 0)
+  else if (!(is.numeric(x$w) || is.numeric(x$v) || is.numeric(w))) {
     stop("Weight, Value and max weight must be numbers")
   }
+  stopifnot(w > 0)
   itemsList <- c()
   systems <- c("Windows","linux","Darwin")
   if( parallel == TRUE ){
@@ -56,10 +57,12 @@ brute_force_knapsack <- function(x , w, parallel = FALSE) {
       set.values <-  lapply(comb, function(comb) {
         if (sum(x[comb, 1]) <= w) {
           sum(x[comb, 2])
-        }else{ 0 }
+        }else{
+          0
+          }
       })
   }
       largestIndex <- which.max(set.values)
       itemsList <- comb[[largestIndex]]
-      return(list("value" = c(set.values[[largestIndex]]),"elements" = c(itemsList)))
+      return(list("value" = c(round(set.values[[largestIndex]])),"elements" = c(itemsList)))
 }

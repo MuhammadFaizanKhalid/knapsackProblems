@@ -53,5 +53,5 @@ dynamic_program <- function(x, w){
   }
 
   items <- which(selectedvals)
-  return(list( "values" = round(max(valmatrix)) , "elements" = items))
+  return(list( "value" = round(max(valmatrix)) , "elements" = items))
 }

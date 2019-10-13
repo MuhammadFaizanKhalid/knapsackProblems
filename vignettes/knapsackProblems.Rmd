@@ -1,0 +1,136 @@
+---
+title: "Package Knapsack"
+author: "Muhammad Faizan Khalid, Fahed Maqbool, Asad Enver"
+date: "October 13, 2019"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  prettydoc::html_pretty:
+    highlight: github
+    theme: cayman
+vignette: |
+  %\VignetteIndexEntry{knapsackProblems} %\VignetteEncoding{UTF-8} %\VignetteEngine{knitr::rmarkdown}
+---
+
+A Package to solve knapsack problem using 3 different approaches.
+
+## Kanpsack?
+The knapsack is a discrete optimization problem where we have a sack that can filled with a limited **weight w** by adding **number of items i = 1, ..., n,** with a **weight wi** and a **value vi** to get the maximum value. This problem is `NP-hard, meaning that it is ”at least as hard as the hardest problem in NP”`
+ref: ([via](https://en.wikipedia.org/wiki/NP-hardness))
+
+## Three Different approaches to solve a knapsack problem
+- brute force **brute force knapsack(x,w, parallel  = FALSE)**
+- dynamic programming     **dynamic_program(x,w)**   
+- greedy heuristic       **greedy_knapsack(x,w)**
+
+##Parameters 
+
+- **x** is a data frame which has two columns named **w** as weight column and **v** as value of each item.
+- **w** is represent a scak capcaity to the sack can be filled.
+- **parallel** which is only used in brute force search alogrithm if you want to run on mulitple core than set is as **TRUE**. The default value is set as **FALSE**
+
+##generate a data
+
+```{r}
+devtools::load_all()
+library("knapsackProblems")
+set.seed(345) 
+n <- 3000   
+knapsack_objects <- data.frame( w=sample(1:4000, size = n, replace = TRUE),
+                                v=runif(n = n, 0, 10000)
+)
+
+head(knapsack_objects) 
+```
+
+
+## brute_force_knapsack(x,w)
+
+
+```{r, warning= FALSE, message= FALSE}
+brute_force_knapsack(knapsack_objects[1:8,], w = 3500)
+```
+
+```{r, warning= FALSE, message= FALSE}
+brute_force_knapsack(x = knapsack_objects[1:12,], w = 2000)
+```
+
+## How long does it takes to run the algorithm for n = 16 objects?
+
+```{r}
+
+set.seed(42) 
+n <- 16  
+knapsack_objects <- data.frame( w=sample(1:4000, size = n, replace = TRUE),
+                                v=runif(n = n, 0, 10000))
+
+system.time(result1 <- brute_force_knapsack(x = knapsack_objects[1:12,], w = 2000))
+```
+
+
+## dynamic_program(x, w)
+
+```{r, warning= FALSE, message= FALSE}
+dynamic_program(knapsack_objects[1:8,], w = 3500)
+```
+
+```{r, warning= FALSE, message= FALSE}
+dynamic_program(x = knapsack_objects[1:12,], w = 2000)
+```
+
+## How long does it takes to run the algorithm for n = 500 objects?
+
+```{r}
+
+set.seed(42)
+n <- 500
+knapsack_objects <- data.frame( w=sample(1:4000, size = n, replace = TRUE),
+                                v=runif(n = n, 0, 10000))
+system.time(result2<- dynamic_program(x = knapsack_objects[1:12,], w = 2000))
+```
+
+
+
+## greedy_knapsack(x, w)
+
+```{r, warning= FALSE, message= FALSE}
+greedy_knapsack(knapsack_objects[1:800,], w = 3500)
+```
+
+```{r, warning= FALSE, message= FALSE}
+greedy_knapsack(x = knapsack_objects[1:12,], w = 2000)
+```
+
+## How long does it takes to run the algorithm for n = 1000000 objects?
+
+```{r}
+set.seed(42) 
+n <- 1000000  
+knapsack_objects <- data.frame( w=sample(1:4000, size = n, replace = TRUE),
+                                v=runif(n = n, 0, 10000))
+system.time(result3 <- greedy_knapsack(x = knapsack_objects[1:12,], w = 2000))
+```
+
+## Paralellism brute force search
+Paralellism is implemented in Brute Force algorithm to optimize performance of program. Usage of paralellism will be achieved by setting paralell parameter to TRUE in brute fore function.
+
+
+
+## Microbenchmark package
+Used for finding out the execution time of a function
+```{r, echo=TRUE}
+library(microbenchmark)
+
+microbenchmark(
+  "brute_force_knapsack"= result1, #n= 16
+  "dynamic_program" = result2, #n= 500
+  "greedy_knapsack" = result3 ,#n = 1000000
+  times = 1,
+  unit = "us"
+)
+```
+
