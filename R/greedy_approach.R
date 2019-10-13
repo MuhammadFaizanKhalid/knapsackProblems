@@ -1,4 +1,4 @@
-gredy_knapsack <- function(x,w){
+greedy_knapsack <- function(x,w){
   if (class(x) != "data.frame") {
     stop("x is not data frame")
   }
