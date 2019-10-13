@@ -1,4 +1,4 @@
-#'@name brute_force_knapsack
+#'@title brute_force_knapsack
 #'@param x A DataFrame with two columns (weight(w) and value(v))
 #'@param w Sack max weight capacity
 #'@param parallel default = FALSE

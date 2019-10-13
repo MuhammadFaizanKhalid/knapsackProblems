@@ -1,3 +1,13 @@
+#'@title Dynamic_program
+#'@param x A DataFrame with two columns (weight(w) and value(v))
+#'@param w Sack maximum weight capacity
+#'
+#'@return rreturns item with maximized value within knapsack weight limit
+#'
+#'@references
+#'\url{https://en.wikipedia.org/wiki/Knapsack_problem#Dynamic_programming_in-advance_algorithm}
+#'
+#'@export
 
 dynamic_program <- function(x, w){
   if (class(x) != "data.frame") {

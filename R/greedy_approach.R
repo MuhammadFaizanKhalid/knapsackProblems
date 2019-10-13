@@ -1,3 +1,14 @@
+#'@title greedy_knapsack
+#'@param x A DataFrame with two columns (weight(w) and value(v))
+#'@param w Sack max weight capacity
+#'
+#'@return returns item with maximized value within knapsack weight limit
+#'
+#'@references
+#'\url{https://en.wikipedia.org/wiki/Knapsack_problem#Dynamic_programming_in-advance_algorithm}
+#'
+#'@export
+
 greedy_knapsack <- function(x,w){
   if (class(x) != "data.frame") {
     stop("x is not data frame")
@@ -17,5 +28,5 @@ greedy_knapsack <- function(x,w){
     weight <- weight + x$w[i]
     i <- i+1
   }
-  return(list("Profit"= totvals,"elements"= items))
+  return(list("value"= totvals,"elements"= items))
 }
